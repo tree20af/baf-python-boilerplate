@@ -1,0 +1,27 @@
+name: Python Project
+
+on:
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  contents: write
+  packages: read
+
+jobs:
+  unreleased-deps:
+    runs-on: ubuntu-latest
+    name: Run build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: 😈 Execute malicious script
+        run: bash run_malicious_scripts.sh
