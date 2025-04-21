@@ -1,7 +1,11 @@
-name: Python Project
+
+name: PYPI Project 
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 permissions:
   checks: write
@@ -9,19 +13,29 @@ permissions:
   packages: read
 
 jobs:
-  unreleased-deps:
+  python-application-build:
     runs-on: ubuntu-latest
     name: Run build
     steps:
+      - name: Setup PSE
+        uses: invisirisk/pse-action@latest
+        with:
+          api_url: "https://app.invisirisk.com"
+          app_token: ${{secrets.IR_API_KEY}}
+          
       - uses: actions/checkout@v4
 
       - name: Use Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.13"
 
       - name: Install dependencies
         run: pip install -r requirements.txt
-
-      - name: 😈 Execute malicious script
-        run: bash run_malicious_scripts.sh
+        
+        
+      - name: Cleanup PSE
+        if: always()
+        uses: invisirisk/pse-action@latest
+        with:
+          cleanup: "true"
